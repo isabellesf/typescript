@@ -103,3 +103,53 @@ function salvar(event:Event) {
 
 formCampeonato.addEventListener("submit", salvar)
 atualizarTabela()
+
+    // Cadastro de Partidas
+    interface Partida {
+      mandante: string;
+      visitante: string;
+      campeonato: string;
+    }
+    
+    const partidas: Partida[] = [];
+    
+    function salvarPartida(event: Event): void {
+      event.preventDefault();
+      const mandante = (document.getElementById("mandante") as HTMLInputElement).value;
+      const visitante = (document.getElementById("visitante") as HTMLInputElement).value;
+      const campeonato = (document.getElementById("campeonato") as HTMLInputElement).value;
+    
+      if (mandante && visitante && campeonato) {
+        partidas.push({ mandante, visitante, campeonato });
+        atualizarTabelaPartidas();
+      }
+    }
+    
+    function atualizarTabelaPartidas(): void {
+      const tabela = document.getElementById("tbPartidas") as HTMLTableElement;
+      tabela.innerHTML = partidas.map(p => `<tr><td>${p.mandante}</td><td>${p.visitante}</td><td>${p.campeonato}</td></tr>`).join("");
+    }
+
+    // Cadastro de Times
+interface Time {
+  nome: string;
+  nomeCurto: string;
+}
+
+const times: Time[] = [];
+
+function salvarTime(event: Event): void {
+  event.preventDefault();
+  const nome = (document.getElementById("nomeTime") as HTMLInputElement).value;
+  const nomeCurto = (document.getElementById("nomeCurto") as HTMLInputElement).value;
+
+  if (nome && nomeCurto) {
+    times.push({ nome, nomeCurto });
+    atualizarTabelaTimes();
+  }
+}
+
+function atualizarTabelaTimes(): void {
+  const tabela = document.getElementById("tbTimes") as HTMLTableElement;
+  tabela.innerHTML = times.map(t => `<tr><td>${t.nome}</td><td>${t.nomeCurto}</td></tr>`).join("");
+}
